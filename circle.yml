@@ -11,5 +11,5 @@ dependencies:
     - mkdir -p ~/docker; docker save codeworksio/speedtest > ~/docker/image.tar
 test:
   override:
-    - docker run --detach --interactive --tty --name speedtest codeworksio/speedtest; sleep 180
+    - docker run --detach --interactive --tty --name speedtest codeworksio/speedtest; sleep 60
     - docker logs speedtest | grep 'speedtest|INFO|ping'
