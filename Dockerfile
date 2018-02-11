@@ -1,4 +1,4 @@
-FROM codeworksio/python:3.6-20180203
+FROM codeworksio/python:3.6-20180210
 
 ENV SPEEDTEST_INTERVAL="1200"
 
