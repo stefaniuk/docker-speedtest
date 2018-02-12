@@ -38,10 +38,9 @@ log:
 	docker logs --follow $(NAME)
 
 test:
-	docker exec --interactive --tty \
-		--user ubuntu \
-		$(NAME) \
-		ps auxw
+	docker run --detach --interactive --tty --name speedtest codeworksio/speedtest
+	sleep 60
+	docker logs speedtest | grep 'speedtest|INFO|ping'
 
 bash:
 	docker exec --interactive --tty \
@@ -56,6 +55,7 @@ clean:
 push:
 	docker push $(IMAGE):$(shell cat VERSION)
 	docker push $(IMAGE):latest
+	sleep 10
 	curl --request POST "https://hooks.microbadger.com/images/$(IMAGE)/rvoIiisHD3LYzsFGoCfydkrRFC0="
 
 .SILENT:

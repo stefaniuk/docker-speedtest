@@ -1,15 +1,9 @@
 machine:
   services:
     - docker
-dependencies:
-  cache_directories:
-    - "~/docker"
-  override:
-    - docker info
-    - if [[ -e ~/docker/image.tar ]]; then docker load --input ~/docker/image.tar; fi
-    - docker build --tag codeworksio/speedtest .
-    - mkdir -p ~/docker; docker save codeworksio/speedtest > ~/docker/image.tar
 test:
   override:
-    - docker run --detach --interactive --tty --name speedtest codeworksio/speedtest; sleep 60
-    - docker logs speedtest | grep 'speedtest|INFO|ping'
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    - make build
+    - make test
+    - make push
